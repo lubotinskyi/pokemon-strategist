@@ -1,0 +1,300 @@
+:root {
+    --bg: #17212b;
+    --card: #1e2c3a;
+    --card-hover: #253746;
+    --text: #ffffff;
+    --muted: #7d8b99;
+    --border: #2c3e50;
+    --accent: #5288c1;
+    --accent-hover: #6a9fd8;
+    --green: #4caf50;
+    --red: #f44336;
+    --amber: #ff9800;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 16px;
+    line-height: 1.5;
+}
+
+.app {
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.header h1 {
+    font-size: 1.5rem;
+    margin-bottom: 4px;
+}
+
+.subtitle {
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+.card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+.label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 8px;
+    min-height: 0;
+}
+
+.chips:empty {
+    display: none;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--accent);
+    border-radius: 16px;
+    font-size: 0.85rem;
+    text-transform: capitalize;
+}
+
+.chip-remove {
+    cursor: pointer;
+    opacity: 0.7;
+    font-weight: bold;
+}
+
+.chip-remove:hover {
+    opacity: 1;
+}
+
+.input-row {
+    display: flex;
+    gap: 8px;
+}
+
+.input-row input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 1rem;
+    outline: none;
+}
+
+.input-row input:focus {
+    border-color: var(--accent);
+}
+
+.btn {
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background 0.15s;
+}
+
+.btn-add {
+    width: 44px;
+    background: var(--accent);
+    color: white;
+    font-size: 1.3rem;
+    line-height: 1;
+}
+
+.btn-add:hover {
+    background: var(--accent-hover);
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 14px;
+    background: var(--accent);
+    color: white;
+    margin-bottom: 12px;
+    font-size: 1.05rem;
+}
+
+.btn-primary:hover {
+    background: var(--accent-hover);
+}
+
+.btn-primary:disabled {
+    background: var(--muted);
+    cursor: not-allowed;
+}
+
+.status {
+    padding: 12px 16px;
+    background: var(--card);
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.result {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.result h2 {
+    font-size: 1.1rem;
+    margin: 16px 0 12px;
+}
+
+.result h2:first-child {
+    margin-top: 0;
+}
+
+.pokemon-card {
+    background: var(--card-hover);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 8px;
+}
+
+.pokemon-card .name {
+    font-weight: 600;
+    text-transform: capitalize;
+    margin-bottom: 6px;
+}
+
+.types {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.type-badge {
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: white;
+}
+
+.weakness-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.weakness-item {
+    padding: 4px 10px;
+    background: rgba(244, 67, 54, 0.15);
+    border: 1px solid var(--red);
+    color: #ff8a80;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    text-transform: capitalize;
+}
+
+.weakness-item.critical {
+    background: rgba(244, 67, 54, 0.3);
+    border-color: var(--red);
+    color: #ff5252;
+    font-weight: 600;
+}
+
+.proposal {
+    background: rgba(255, 152, 0, 0.1);
+    border-left: 4px solid var(--amber);
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.proposal p {
+    margin: 4px 0;
+    font-size: 0.9rem;
+}
+
+.proposal strong {
+    color: var(--amber);
+}
+
+.sources {
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+.sources a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.sources a:hover {
+    text-decoration: underline;
+}
+
+.footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+    margin-top: 24px;
+}
+
+.footer a {
+    color: var(--accent);
+}
+
+/* Цвета типов Pokémon */
+.type-normal    { background: #a8a878; }
+.type-fire      { background: #f08030; }
+.type-water     { background: #6890f0; }
+.type-electric  { background: #f8d030; color: #333; }
+.type-grass     { background: #78c850; }
+.type-ice       { background: #98d8d8; color: #333; }
+.type-fighting  { background: #c03028; }
+.type-poison    { background: #a040a0; }
+.type-ground    { background: #e0c068; color: #333; }
+.type-flying    { background: #a890f0; }
+.type-psychic   { background: #f85888; }
+.type-bug       { background: #a8b820; }
+.type-rock      { background: #b8a038; }
+.type-ghost     { background: #705898; }
+.type-dragon    { background: #7038f8; }
+.type-dark      { background: #705848; }
+.type-steel     { background: #b8b8d0; color: #333; }
+.type-fairy     { background: #ee99ac; }

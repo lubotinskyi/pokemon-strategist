@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Team Strategist</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <h1>⚡ Pokémon Team Strategist</h1>
+            <p class="subtitle">Анализ команды и поиск слабостей</p>
+        </header>
+
+        <main class="main">
+            <!-- Ввод команды -->
+            <section class="card">
+                <label class="label">Твоя команда</label>
+                <div id="team-chips" class="chips"></div>
+                <div class="input-row">
+                    <input
+                        id="team-input"
+                        type="text"
+                        placeholder="pikachu"
+                        autocomplete="off"
+                    />
+                    <button id="team-add" class="btn btn-add">+</button>
+                </div>
+            </section>
+
+            <!-- Ввод противника -->
+            <section class="card">
+                <label class="label">Противник</label>
+                <div id="opponent-chips" class="chips"></div>
+                <div class="input-row">
+                    <input
+                        id="opponent-input"
+                        type="text"
+                        placeholder="mewtwo"
+                        autocomplete="off"
+                    />
+                    <button id="opponent-add" class="btn btn-add">+</button>
+                </div>
+            </section>
+
+            <!-- Кнопка анализа -->
+            <button id="analyze" class="btn btn-primary">
+                🔍 Анализировать команду
+            </button>
+
+            <!-- Статус -->
+            <div id="status" class="status hidden"></div>
+
+            <!-- Результат -->
+            <section id="result" class="result hidden"></section>
+        </main>
+
+        <footer class="footer">
+            Данные: <a href="https://pokeapi.co" target="_blank">PokéAPI</a>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
