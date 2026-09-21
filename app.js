@@ -142,6 +142,33 @@ function teamWeaknessSummary(teamData) {
     return summary;
 }
 
+/**
+ * Идея 2: найти покемонов команды, которых противник бьёт больно.
+ *
+ * Смотрим типы противника. Для каждого покемона команды проверяем,
+ * есть ли среди них тот, что бьёт его сильно. Возвращаем список
+ * уязвимых, отсортированный по множителю (самые уязвимые — сверху).
+ */
+function vulnerableAgainstOpponent(teamData, opponentData) {
+    const opponentTypes = opponentData.types;
+    const vulnerable = [];
+
+    for (const p of teamData) {
+        const weaknesses = weaknessesOf(p.types);
+        const hits = opponentTypes.filter(t => weaknesses[t]);
+        if (hits.length > 0) {
+            const maxMultiplier = Math.max(...hits.map(t => weaknesses[t]));
+            vulnerable.push({
+                name: p.name,
+                multiplier: maxMultiplier,
+                types: hits,
+            });
+        }
+    }
+
+    return vulnerable.sort((a, b) => b.multiplier - a.multiplier);
+}
+
 // ─── Отображение ──────────────────────────────────────────
 
 function showStatus(text) {
@@ -174,7 +201,7 @@ function renderPokemonCard(pokemon) {
     `;
 }
 
-function renderResult(teamData, summary, proposal, sources) {
+function renderResult(teamData, summary, proposal, sources, opponentData, vulnerable) {
     const sortedSummary = Object.entries(summary).sort((a, b) => b[1] - a[1]);
 
     let html = "";
@@ -183,7 +210,7 @@ function renderResult(teamData, summary, proposal, sources) {
     html += "<h2>Команда</h2>";
     html += teamData.map(renderPokemonCard).join("");
 
-    // Слабости
+    // Слабости команды
     html += "<h2>Слабости команды</h2>";
     if (sortedSummary.length === 0) {
         html += "<p>Серьёзных слабостей не найдено.</p>";
@@ -193,6 +220,24 @@ function renderResult(teamData, summary, proposal, sources) {
             html += `<span class="weakness-item ${count >= 3 ? "critical" : ""}">${type}: ${count} покемонов</span>`;
         }
         html += "</div>";
+    }
+
+    // Против противника
+    if (opponentData) {
+        html += `<h2>Против ${opponentData.name}</h2>`;
+        html += `<div class="types" style="margin-bottom:12px">${opponentData.types.map(typeBadge).join("")}</div>`;
+
+        if (vulnerable.length === 0) {
+            html += `<p>Команда устойчива к атакам противника.</p>`;
+        } else {
+            html += `<p style="color:#ff9800;margin-bottom:8px">⚠️ Осторожно, ${opponentData.name} бьёт больно:</p>`;
+            html += '<div class="weakness-list">';
+            for (const v of vulnerable) {
+                const types = v.types.join(", ");
+                html += `<span class="weakness-item ${v.multiplier >= 4 ? "critical" : ""}">${v.name}: ${types} ×${v.multiplier}</span>`;
+            }
+            html += "</div>";
+        }
     }
 
     // Замена
@@ -253,8 +298,12 @@ async function analyze() {
             return;
         }
 
+        // Противник — первый из opponents (последний в responses после teamData)
+        const opponentData = responses[responses.length - 1];
+
         showStatus("Считаю слабости…");
         const summary = teamWeaknessSummary(teamData);
+        const vulnerable = vulnerableAgainstOpponent(teamData, opponentData);
 
         // Простая эвристика: убрать самого слабого
         let worstName = null;
@@ -277,7 +326,7 @@ async function analyze() {
         } : null;
 
         hideStatus();
-        renderResult(teamData, summary, proposal, sources);
+        renderResult(teamData, summary, proposal, sources, opponentData, vulnerable);
 
     } catch (err) {
         showStatus(`Ошибка: ${err.message}`);
